@@ -9,11 +9,19 @@ async function obtenerLibrosVerne() {
     "Dueño del mundo (novela)",
     "Miguel Strogoff",
     "El castillo de los Cárpatos",
-    "El conde de Montecristo", // Aparecerá aunque sea de Dumas
-    "Viaje a la Luna",
+    "Viaje a la Luna", // Nombre común en Wikipedia
     "De la Tierra a la Luna",
+    
+    // Extras representativos para completar los 17
+    "Veinte mil leguas de viaje submarino",
     "Viaje al centro de la Tierra",
-    "Veinte mil leguas de viaje submarino"
+    "Cinco semanas en globo",
+    "El faro del fin del mundo",
+    "Los hijos del capitán Grant",
+    "Una ciudad flotante",
+    "Escuela de Robinsones",
+    "Las tribulaciones de un chino en China",
+    "Robur el conquistador"
   ];
 
   const params = {
