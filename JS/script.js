@@ -1,7 +1,5 @@
 async function obtenerLibrosVerne() {
   const base = "https://es.wikipedia.org/w/api.php";
-  
-  // Lista de títulos exactos que quieres buscar
   const librosDeseados = [
     "La vuelta al mundo en ochenta días",
     "La isla misteriosa",
@@ -9,10 +7,8 @@ async function obtenerLibrosVerne() {
     "Dueño del mundo (novela)",
     "Miguel Strogoff",
     "El castillo de los Cárpatos",
-    "Viaje a la Luna", // Nombre común en Wikipedia
+    "Viaje a la Luna",
     "De la Tierra a la Luna",
-    
-    // Extras representativos para completar los 17
     "Veinte mil leguas de viaje submarino",
     "Viaje al centro de la Tierra",
     "Cinco semanas en globo",
@@ -26,7 +22,7 @@ async function obtenerLibrosVerne() {
 
   const params = {
     action: "query",
-    titles: librosDeseados.join('|'), // Buscamos por títulos específicos
+    titles: librosDeseados.join('|'),
     prop: "extracts|pageimages",
     exsentences: "2",
     exintro: "1",
@@ -52,8 +48,6 @@ async function obtenerLibrosVerne() {
       return [];
     }
 
-    // El orden de Wikipedia suele ser por ID de página, 
-    // así que mapeamos los resultados
     const resultados = Object.values(data.query.pages).map(p => ({
       titulo: p.title,
       resumen: p.extract || "Sin descripción.",
