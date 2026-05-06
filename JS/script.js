@@ -1,12 +1,24 @@
 async function obtenerLibrosVerne() {
-  // Endpoint específico para evitar redirecciones 301
   const base = "https://es.wikipedia.org/w/api.php";
   
+  // Lista de títulos exactos que quieres buscar
+  const librosDeseados = [
+    "La vuelta al mundo en ochenta días",
+    "La isla misteriosa",
+    "Dos años de vacaciones",
+    "Dueño del mundo (novela)",
+    "Miguel Strogoff",
+    "El castillo de los Cárpatos",
+    "El conde de Montecristo", // Aparecerá aunque sea de Dumas
+    "Viaje a la Luna",
+    "De la Tierra a la Luna",
+    "Viaje al centro de la Tierra",
+    "Veinte mil leguas de viaje submarino"
+  ];
+
   const params = {
     action: "query",
-    generator: "categorymembers",
-    gcmtitle: "Categoría:Novelas de Julio Verne", // Asegúrate que la categoría sea exacta
-    gcmlimit: "12",
+    titles: librosDeseados.join('|'), // Buscamos por títulos específicos
     prop: "extracts|pageimages",
     exsentences: "2",
     exintro: "1",
@@ -14,10 +26,9 @@ async function obtenerLibrosVerne() {
     piprop: "thumbnail",
     pithumbsize: "400",
     format: "json",
-    origin: "*" // Crucial para evitar el error de Cross-Origin
+    origin: "*"
   };
 
-  // Convertimos el objeto a una cadena de texto segura para URL
   const queryPath = Object.keys(params)
     .map(k => `${k}=${encodeURIComponent(params[k])}`)
     .join('&');
@@ -28,19 +39,20 @@ async function obtenerLibrosVerne() {
 
     const data = await response.json();
     
-    // Wikipedia devuelve las páginas dentro de data.query.pages
     if (!data.query || !data.query.pages) {
       console.warn("No se encontraron resultados.");
       return [];
     }
 
+    // El orden de Wikipedia suele ser por ID de página, 
+    // así que mapeamos los resultados
     const resultados = Object.values(data.query.pages).map(p => ({
       titulo: p.title,
       resumen: p.extract || "Sin descripción.",
-      imagen: p.thumbnail ? p.thumbnail.source : "https://placeholder.com"
+      imagen: p.thumbnail ? p.thumbnail.source : "https://via.placeholder.com/400x600?text=Sin+Imagen"
     }));
 
-    console.log("Éxito:", resultados);
+    console.log("Libros encontrados:", resultados);
     return resultados;
 
   } catch (err) {
