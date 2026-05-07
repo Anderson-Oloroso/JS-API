@@ -61,5 +61,68 @@ async function obtenerLibrosVerne() {
     console.error("Falló la petición:", err.message);
   }
 }
-
 obtenerLibrosVerne();
+
+const aventuraViajes = [
+  "La vuelta al mundo en ochenta días",
+  "Dos años de vacaciones",
+  "Cinco semanas en globo",
+  "Una ciudad flotante",
+  "Los hijos del capitán Grant",
+  "El faro del fin del mundo"
+];
+
+const cienciaFiccion = [
+  "Viaje a la Luna",
+  "De la Tierra a la Luna",
+  "Veinte mil leguas de viaje submarino",
+  "Viaje al centro de la Tierra",
+  "Robur el conquistador"
+];
+
+const aventuraHistorica = [
+  "Miguel Strogoff",
+  "La isla misteriosa"
+];
+
+const misterioGotico = [
+  "El castillo de los Cárpatos",
+  "Las tribulaciones de un chino en China"
+];
+
+const juvenilEscuela = [
+  "Escuela de Robinsones"
+];
+
+const satiricoSocial = [
+  "Dueño del mundo (novela)"
+];
+
+// // Opcional: objeto que agrupa todo
+// const categorias = {
+//   "Aventura / Viajes 🛫": aventuraViajes,
+//   "Ciencia ficción 🤖": cienciaFiccion,
+//   "Aventura histórica / Épica 🐘": aventuraHistorica,
+//   "Misterio / Gótico 🕯️": misterioGotico,
+//   "Juvenil / Escuela 📚": juvenilEscuela,
+//   "Satírico / Social 😄": satiricoSocial
+// };
+
+const gridElementos = document.getElementsByClassName("grid");
+const caja = document.createElement("div");
+for (let i = 0; i < gridElementos.length; i++) {
+  console.log(gridElementos[i]);
+}
+gridElementos[0].addEventListener("click", (e) => {
+  if (e.target.tagName === "H2") {
+    alert(`Has hecho clic en el género: ${e.target.textContent}`);
+    caja.textContent = resultados
+  } else if (e.target.tagName === "DIV") {
+    alert(`Has hecho clic en el género: ${e.target.textContent}`);
+  } else {
+    alert("Haz hecho clic en un área vacía de la cuadrícula.");
+  }     
+});
+
+
+
