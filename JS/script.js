@@ -63,39 +63,39 @@ async function obtenerLibrosVerne() {
 }
 obtenerLibrosVerne();
 
-const aventuraViajes = [
-  "La vuelta al mundo en ochenta días",
-  "Dos años de vacaciones",
-  "Cinco semanas en globo",
-  "Una ciudad flotante",
-  "Los hijos del capitán Grant",
-  "El faro del fin del mundo"
-];
-
-const cienciaFiccion = [
+const scienceFiction = [
   "Viaje a la Luna",
   "De la Tierra a la Luna",
   "Veinte mil leguas de viaje submarino",
   "Viaje al centro de la Tierra",
-  "Robur el conquistador"
+  "Robur el conquistador",
+  "Dueño del mundo (novela)"
 ];
 
-const aventuraHistorica = [
+const epicJourneys = [
+  "La vuelta al mundo en ochenta días",
   "Miguel Strogoff",
+  "Los hijos del capitán Grant",
+  "El faro del fin del mundo"
+];
+
+const exploration = [
+  "Cinco semanas en globo",
+  "Una ciudad flotante",
   "La isla misteriosa"
 ];
 
-const misterioGotico = [
-  "El castillo de los Cárpatos",
-  "Las tribulaciones de un chino en China"
-];
-
-const juvenilEscuela = [
+const survival = [
+  "Dos años de vacaciones",
   "Escuela de Robinsones"
 ];
 
-const satiricoSocial = [
-  "Dueño del mundo (novela)"
+const mystery = [
+  "El castillo de los Cárpatos"
+];
+
+const actionThrillers = [
+  "Las tribulaciones de un chino en China"
 ];
 
 // // Opcional: objeto que agrupa todo
@@ -108,21 +108,22 @@ const satiricoSocial = [
 //   "Satírico / Social 😄": satiricoSocial
 // };
 
-const gridElementos = document.getElementsByClassName("grid");
-const caja = document.createElement("div");
-for (let i = 0; i < gridElementos.length; i++) {
-  console.log(gridElementos[i]);
+function getCardClick(){
+  const gridElementos = document.getElementsByClassName("card");
+  for(let i = 0; i < gridElementos.length; i++){
+    gridElementos[i].addEventListener("click", (numCard)=>{
+      const texto = numCard.currentTarget.textContent
+      alert(texto)
+      const index = i
+      alert("Indice: "+ index)
+    })
+  }
 }
-gridElementos[0].addEventListener("click", (e) => {
-  if (e.target.tagName === "H2") {
-    alert(`Has hecho clic en el género: ${e.target.textContent}`);
-    caja.textContent = resultados
-  } else if (e.target.tagName === "DIV") {
-    alert(`Has hecho clic en el género: ${e.target.textContent}`);
-  } else {
-    alert("Haz hecho clic en un área vacía de la cuadrícula.");
-  }     
-});
+getCardClick()
+
+function showBooks(){
+  
+}
 
 
 
