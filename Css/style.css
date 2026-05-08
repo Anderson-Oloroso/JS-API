@@ -103,22 +103,10 @@ main section div{
     margin-top: 1rem;
 }
 .container .grid{
-    width: 31%;
-    min-height: auto;
-    height: auto;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--navy-mid);
-    border-radius: 15px;
-    box-shadow: 0px 0px 5px cyan;
-}
-
-#card__ficcion,#card__epica, #card__exploracion, #card__aventura, #card__misterio, #card__supervivencia{
     width: 100%;
     height: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    flex-flow: column wrap;
     gap: 1rem;
     justify-items: center;
     align-items: start;
@@ -128,25 +116,24 @@ main section div{
     box-shadow: 0px 0px 5px cyan;
     margin-bottom: 1rem;
 }
+
+.card{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+.card div{
+    border: 2px solid rgba(255, 255, 255, 0.483) ;
+    padding: 1rem;
+    border-radius: 15px;
+}
 h2 {
     grid-column: 1 / -1;
     width: 100%;
     text-align: center;
     margin: 0;
-}
-
-libro-card{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    flex-flow: column wrap;
-    background-color: var(--navy-mid);
-    border-radius: 15px;
-    box-shadow: 0px 0px 5px cyan;
-    margin-bottom: 1rem;
-    overflow: hidden;
 }
 
 footer{
