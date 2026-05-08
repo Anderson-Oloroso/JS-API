@@ -5,7 +5,7 @@ async function obtenerLibrosVerne(arreglo) {
     action: "query",
     titles: librosDeseados.join('|'),
     prop: "extracts|pageimages",
-    exsentences: "2",
+    exsentences: "1",
     exintro: "1",
     explaintext: "1",
     piprop: "thumbnail",
@@ -78,25 +78,13 @@ const actionThrillers = [
   "Las tribulaciones de un chino en China"
 ];
 
-// // Opcional: objeto que agrupa todo
-// const categorias = {
-//   "Aventura / Viajes 🛫": aventuraViajes,
-//   "Ciencia ficción 🤖": cienciaFiccion,
-//   "Aventura histórica / Épica 🐘": aventuraHistorica,
-//   "Misterio / Gótico 🕯️": misterioGotico,
-//   "Juvenil / Escuela 📚": juvenilEscuela,
-//   "Satírico / Social 😄": satiricoSocial
-// };
 
 function getCardClick(){
   const gridElementos = document.getElementsByClassName("grid");
   for(let i = 0; i < gridElementos.length; i++){
-    gridElementos[i].addEventListener("click", (numCard)=>{
-      const texto = numCard.currentTarget.textContent
+    gridElementos[i].addEventListener("click", () => {
       if (i === 0){
-        let data = obtenerLibrosVerne(scienceFiction)
-        data.then(libros => {
-          libros.forEach(libro => console.log(libro.titulo, "\n",libro.resumen,"\n",libro.imagen))
+        obtenerLibrosVerne(scienceFiction).then(libros => {
           const ficcion = document.getElementById("card__ficcion");
           libros.forEach(libro => {
             const libroCard = document.createElement("libro-card");
@@ -104,81 +92,160 @@ function getCardClick(){
             libroCard.setAttribute("resumen", libro.resumen);
             libroCard.setAttribute("imagen", libro.imagen);
             ficcion.appendChild(libroCard);
-          })
-        })
-      }else if (i === 1){
-        epicJourneys.forEach(libro => console.log(libro))
-        obtenerLibrosVerne(epicJourneys)
-      }else if (i === 2){
-        exploration.forEach(libro => console.log(libro))
-        obtenerLibrosVerne(exploration)
-      }else if (i === 3){
-        survival.forEach(libro => console.log(libro))
-        obtenerLibrosVerne(survival)
-      }else if (i === 4){
-        mystery.forEach(libro => console.log(libro))
-        obtenerLibrosVerne(mystery)
-      }else if (i === 5){
-        actionThrillers.forEach(libro => console.log(libro))
-        obtenerLibrosVerne(actionThrillers)
+          });
+        });
+      } else if (i === 1){
+        obtenerLibrosVerne(epicJourneys).then(libros => {
+          const epic = document.getElementById("card__epica");
+          libros.forEach(libro => {
+            const libroCard = document.createElement("libro-card");
+            libroCard.setAttribute("titulo", libro.titulo);
+            libroCard.setAttribute("resumen", libro.resumen);
+            libroCard.setAttribute("imagen", libro.imagen);
+            epic.appendChild(libroCard);
+          });
+        });
+      } else if (i === 2){
+        obtenerLibrosVerne(exploration).then(libros => {
+          const explorationCard = document.getElementById("card__exploracion");
+          libros.forEach(libro => {
+            const libroCard = document.createElement("libro-card");
+            libroCard.setAttribute("titulo", libro.titulo);
+            libroCard.setAttribute("resumen", libro.resumen);
+            libroCard.setAttribute("imagen", libro.imagen);
+            explorationCard.appendChild(libroCard);
+          });
+        });
+      } else if (i === 3){
+        obtenerLibrosVerne(survival).then(libros => {
+          const survivalCard = document.getElementById("card__supervivencia");
+          libros.forEach(libro => {
+            const libroCard = document.createElement("libro-card");
+            libroCard.setAttribute("titulo", libro.titulo);
+            libroCard.setAttribute("resumen", libro.resumen);
+            libroCard.setAttribute("imagen", libro.imagen);
+            survivalCard.appendChild(libroCard);
+          });
+        });
+      } else if (i === 4){
+        obtenerLibrosVerne(mystery).then(libros => {
+          const mysteryCard = document.getElementById("card__misterio");
+          libros.forEach(libro => {
+            const libroCard = document.createElement("libro-card");
+            libroCard.setAttribute("titulo", libro.titulo);
+            libroCard.setAttribute("resumen", libro.resumen);
+            libroCard.setAttribute("imagen", libro.imagen);
+            mysteryCard.appendChild(libroCard);
+          });
+        });
+      } else if (i === 5){
+        obtenerLibrosVerne(actionThrillers).then(libros => {
+          const actionThrillersCard = document.getElementById("card__aventura");    
+          libros.forEach(libro => {
+            const libroCard = document.createElement("libro-card");
+            libroCard.setAttribute("titulo", libro.titulo);
+            libroCard.setAttribute("resumen", libro.resumen);
+            libroCard.setAttribute("imagen", libro.imagen);
+            actionThrillersCard.appendChild(libroCard);
+          });
+        });
       }
-    })
+    });
   }
 }
 getCardClick()
 
-
 class libro extends HTMLElement{
+  static get observedAttributes(){
+    return ['view'];
+  }
   constructor(){
     super();
-    const shadowRoot = this.attachShadow({mode: "open"});
   }
   connectedCallback(){
-    const titulo = this.getAttribute("titulo") || "Título desconocido";
-    const resumen = this.getAttribute("resumen") || "Sin descripción.";
-    const imagen = this.getAttribute("imagen") || "https://via.placeholder.com/400x600?text=Sin+Imagen";
-    this.shadowRoot.innerHTML = `
-      <style>
-        .grid {
-          width: 90vh;
-          display: flex;
-          flex-flow: row wrap;
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-        .card {   
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 1rem;
-          background-color: #fff;
-          border-radius: 15px;
-          box-shadow: 0px 0px 5px cyan;
-        }
-        .card img {
-          width: 100%;
-          height: auto;
-          border-radius: 10px;
-          margin-bottom: 1rem;
-        }
-        .card h2 {
-          font-size: 1.5rem;
-          margin: 0.5rem 0;
-        }
-        .card p {
-          font-size: 1rem;
-          text-align: center;
-        }
-      </style>
-      <div class="card">  
-        <img src="${imagen}" alt="${titulo}">
-        <h2>${titulo}</h2>
-        <p>${resumen}</p> 
-      </div>
-    `;
+    const shadowRoot = this.attachShadow({mode: "open"});
+    const titulo = document.createElement("h3")
+    const title = this.getAttribute("titulo") 
+    titulo.textContent = title;
+    const resumen = document.createElement("p")
+    const description = this.getAttribute("resumen")
+    resumen.textContent = description;
+    const imagen = document.createElement("img")
+    const image = this.getAttribute("imagen")
+    const content = document.createElement("div")
+    content.className = "content"
+    const btnImagen = document.createElement("button")
+    btnImagen.textContent = "Ver imagen"
+    btnImagen.type = "button"
+    btnImagen.className = "btn-imagen"
+    btnImagen.addEventListener('click', () => {
+      if (image) window.open(image, '_blank');
+    });
+    const style = document.createElement("style")
+    style.textContent = `
+      :host {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+        height: 26rem;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+      .content {
+        padding: 1rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      img {
+        width: 100%;
+        height: 14rem;
+        object-fit: cover;
+      }
+      .btn-imagen {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 999px;
+        background: #1f5a8a;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      .btn-imagen:hover {
+        background: #163f5d;
+      }
+      :host([view="images"]) .content {
+        display: none;
+      }
+      :host([view="text"]) img {
+        display: none;
+      }
+      h3 {
+        font-size: 1.3em;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        font-size: 0.95em;
+        color: #555;
+        margin: 0;
+        line-height: 1.4;
+      }
+    ` 
+    shadowRoot.appendChild(style);
+    imagen.src = image;
+    imagen.alt = title;
+    content.appendChild(titulo);
+    content.appendChild(resumen);
+    content.appendChild(btnImagen);
+    shadowRoot.appendChild(content);
+    shadowRoot.appendChild(imagen);
   } 
 }
 customElements.define("libro-card", libro); 
