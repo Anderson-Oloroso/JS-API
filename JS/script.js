@@ -80,70 +80,137 @@ const actionThrillers = [
 
 const allBooks = [
   scienceFiction,
+  epicJourneys,
   exploration,
   survival,
   mystery,
   actionThrillers
 ]
-function getCardClick(){
-  const gridElementos = document.getElementsByClassName("grid");
-  for(let i = 0; i < gridElementos.length; i++){
-    gridElementos[i].addEventListener("click", () => {
-      if (i === 0){
-        obtenerLibrosVerne(scienceFiction).then(libros => {
-          const ficcion = document.getElementById("card__ficcion");
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen, e.imagen)
-            ficcion.appendChild(card)
-          })
-        })
-      } else if (i === 1){
-        obtenerLibrosVerne(epicJourneys).then(libros => {
-          const epic = document.getElementById("card__epica");
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen, e.imagen)
-            epic.appendChild(card)
-          })
-        });
-      } else if (i === 2){
-        obtenerLibrosVerne(exploration).then(libros => {
-          const explorationCard = document.getElementById("card__exploracion");
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen, e.imagen)
-            explorationCard.appendChild(card)
-          })
-        });
-      } else if (i === 3){
-        obtenerLibrosVerne(survival).then(libros => {
-          const survivalCard = document.getElementById("card__supervivencia");
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen,e.imagen)
-            survivalCard.appendChild(card)
-          })
-        });
-      } else if (i === 4){
-        obtenerLibrosVerne(mystery).then(libros => {
-          const mysteryCard = document.getElementById("card__misterio");
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen,e.imagen)
-            mysteryCard.appendChild(card)
-          })
-        });
-      } else if (i === 5){
-        obtenerLibrosVerne(actionThrillers).then(libros => {
-          const actionThrillersCard = document.getElementById("card__aventura");    
-          libros.forEach(e=>{
-            const card = insertCard(e.titulo, e.resumen,e.imagen)
-            actionThrillersCard.appendChild(card)
-          })
-        });
-      }
-    });
-  }
-}
-getCardClick()
+const all = []
+allBooks.forEach(e=>{
+  e.forEach(b=>{
+    all.push(b)
+  })
+})
 
-function insertCard(titulo, text, img){
+const category = [
+  {
+    books: scienceFiction,
+    index: "card__fiction"
+  },
+  {
+    books: epicJourneys,
+    index: "card__epica"
+  },
+  {
+    books: exploration,
+    index: "card__exploracion"
+  },
+  {
+    books: survival,
+    index: "card__supervivencia"
+  },
+  {
+    books: mystery,
+    index: "card__misterio"
+  },
+  {
+    books: actionThrillers,
+    index: "card__aventura"
+  }
+]
+category.forEach(e=>{
+  console.log(e)
+})
+// function getCardClick(){
+//   const gridElementos = document.getElementsByClassName("grid");
+//   for(let i = 0; i < gridElementos.length; i++){
+//     gridElementos[i].addEventListener("click", () => {
+//       if (i === 0){
+//         obtenerLibrosVerne(scienceFiction).then(libros => {
+//           const ficcion = document.getElementById("card__ficcion");
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen, e.imagen)
+//             ficcion.appendChild(card)
+//           })
+//         })
+//       } else if (i === 1){
+//         obtenerLibrosVerne(epicJourneys).then(libros => {
+//           const epic = document.getElementById("card__epica");
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen, e.imagen)
+//             epic.appendChild(card)
+//           })
+//         });
+//       } else if (i === 2){
+//         obtenerLibrosVerne(exploration).then(libros => {
+//           const explorationCard = document.getElementById("card__exploracion");
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen, e.imagen)
+//             explorationCard.appendChild(card)
+//           })
+//         });
+//       } else if (i === 3){
+//         obtenerLibrosVerne(survival).then(libros => {
+//           const survivalCard = document.getElementById("card__supervivencia");
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen,e.imagen)
+//             survivalCard.appendChild(card)
+//           })
+//         });
+//       } else if (i === 4){
+//         obtenerLibrosVerne(mystery).then(libros => {
+//           const mysteryCard = document.getElementById("card__misterio");
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen,e.imagen)
+//             mysteryCard.appendChild(card)
+//           })
+//         });
+//       } else if (i === 5){
+//         obtenerLibrosVerne(actionThrillers).then(libros => {
+//           const actionThrillersCard = document.getElementById("card__aventura");    
+//           libros.forEach(e=>{
+//             const card = insertCard(e.titulo, e.resumen,e.imagen)
+//             actionThrillersCard.appendChild(card)
+//           })
+//         }  
+//     });
+//   }
+// }
+// getCardClick()
+
+function getCardClick(){
+  const gridElementos = document.querySelectorAll(".grid")   
+  // console.log(gridElementos) 
+  // gridElementos.forEach((e, id) =>{
+  //   const b = category[id]
+  //   e.addEventListener("click",()=>{
+  //     obtenerLibrosVerne(b.books)
+  //     .then(libros=>{
+  //       insertCard(libros, b.index)
+  //     .catch(error =>{
+  //       alert("No se obtuvo ningun dato")
+  //     })
+  //     })
+  //   })
+  // })
+  gridElementos.forEach((e, idx)=>{
+    e.addEventListener("click", ()=>{
+      gridElementos[idx].insertCard()
+    })
+  })
+}
+
+function insertCard(libros, index){
+  const boxCard = document.getElementById(index)
+  boxCard.innerHTML = ''
+  libros.forEach(libro=>{
+    const card = insertCard(libro.titulo, libro.resumen, libro.imagen)
+    boxCard.appendChild(card)
+  })
+}
+
+function createCard(titulo, text, img){
   const tituloContent = document.createElement("h3")
   tituloContent.textContent = titulo
 
@@ -162,3 +229,5 @@ function insertCard(titulo, text, img){
   
   return card
 }
+
+getCardClick()
