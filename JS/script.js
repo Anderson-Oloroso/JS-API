@@ -123,17 +123,35 @@ category.forEach(e=>{
   console.log(e)
 })
 
+function loading (){
+  const loadingText = document.createElement("p")
+  loadingText.textContent = "Cargando..."
+  return loadingText
+}
+
 function getCardClick(){
   const gridElementos = document.querySelectorAll(".grid")   
   gridElementos.forEach((e, id) =>{
     const b = category[id]
+    let isLoaded = false
     e.addEventListener("click",()=>{
+      const boxCard = document.getElementById(b.index)
+      if(isLoaded && boxCard.innerHTML !== ''){
+        boxCard.innerHTML = ''
+        isLoaded = false
+        return
+      }
+      const loadingText = loading()
+      e.appendChild(loadingText)
       obtenerLibrosVerne(b.books)
       .then(libros=>{
+        e.removeChild(loadingText)
         insertCard(libros, b.index)
+        isLoaded = true
       })
       .catch(error =>{
         alert("No se obtuvo ningun dato")
+        isLoaded = false
       })
     })
   })
