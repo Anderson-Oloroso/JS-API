@@ -118,6 +118,37 @@ main section div{
     justify-content: center;
     flex-flow: column wrap;
 }
+section button{
+    width: 6rem;
+    height: 6rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: var(--paper);
+    border: none;
+    transform: 0.2s;
+    animation: colorShift 10s linear infinite;
+
+}
+section button a{
+    text-decoration: none;
+    color: var(--paper);
+}
+
+section button:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+@keyframes colorShift{
+  0%   { background: red; color: white; }
+  20%  { background: blue; color: white; }
+  40%  { background: purple; color: white; }
+  60%  { background: green; color: white; }
+  80%  { background: orange; color: white; }
+  100% { background: red; color: white; }
+}
+
 .container{
     width: 90%;
     height: auto;
