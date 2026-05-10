@@ -186,4 +186,25 @@ function createCard(titulo, text, img){
   return card
 }
 
+function search(){
+  const btn = document.getElementById("btnSearch")
+  const input = document.getElementById("inSearch")
+  const searchTerm = input.value.toLowerCase()
+  const container = document.getElementById("container")
+  const results = all.filter(book => book.toLowerCase().includes(searchTerm))
+  
+  if(results.length > 0){
+    alert("Resultados encontrados:\n" + results.join("\n"))
+  } else {
+    alert("No se encontraron resultados para: " + searchTerm)
+  }
+  btn.addEventListener("click", () => {
+    if(input.value === ''){
+      alert("Por favor ingresa un término de búsqueda.")
+    } else {
+      search()
+    } 
+  })
+}
+
 getCardClick()
