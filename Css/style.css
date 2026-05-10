@@ -130,7 +130,7 @@ section button{
     animation: colorShift 10s linear infinite;
 
 }
-section button a{
+a{
     text-decoration: none;
     color: var(--paper);
 }
